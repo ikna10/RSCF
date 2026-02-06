@@ -1,6 +1,6 @@
 import streamlit as st
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2.service_account import Credentials
 import pandas as pd
 import uuid
 import re
@@ -94,10 +94,15 @@ SHEET_NAME = "USER_DATA"
 
 def connect_sheet():
     scope = [
-        "https://spreadsheets.google.com/feeds",
+        "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive"
     ]
-    creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+
+    creds = Credentials.from_service_account_file(
+        "credentials.json",
+        scopes=scope
+    )
+
     client = gspread.authorize(creds)
     return client.open(SHEET_NAME).sheet1
 
@@ -315,4 +320,5 @@ else:
     if st.session_state.page == "login":
         login_page()
     else:
+
         signup_page()
