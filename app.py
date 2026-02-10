@@ -92,14 +92,20 @@ body {
 
 SHEET_NAME = "USER_DATA"
 
+from google.oauth2.service_account import Credentials
+import streamlit as st
+import gspread
+
 def connect_sheet():
     scope = [
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive"
     ]
 
-    creds = Credentials.from_service_account_file(
-        "credentials.json",
+    creds_dict = st.secrets["gcp_service_account"]
+
+    creds = Credentials.from_service_account_info(
+        creds_dict,
         scopes=scope
     )
 
@@ -322,3 +328,4 @@ else:
     else:
 
         signup_page()
+
