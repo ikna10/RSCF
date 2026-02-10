@@ -4,6 +4,11 @@ from google.oauth2.service_account import Credentials
 import pandas as pd
 import uuid
 import re
+st.markdown("""
+<style>
+footer {visibility: hidden;}
+</style>
+""", unsafe_allow_html=True)
 
 
 
@@ -328,6 +333,7 @@ else:
     else:
 
         signup_page()
+
 
 
 
