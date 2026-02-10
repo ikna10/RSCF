@@ -263,7 +263,7 @@ def dashboard_page():
     with st.expander("☰ Menu", expanded=False):
         st.link_button("ℹ️ Group Members", "https://docs.google.com/document/d/1YymXCoUaKSVT9I8O-4JrPcAAHTnsmNagHRoZV9Q7quM/edit?tab=t.0")
         st.link_button("📜 Group Rules", "https://docs.google.com/document/d/1UmwVVb2q8azpaN4nrN22489r9zBH_tJKzXJPZtivyxM/edit?tab=t.0")
-        st.link_button("💰 Fund Status", Coming Soon...)
+        st.button("💰 Fund Status", Coming Soon...)
 
         if st.button("🚪 Logout"):
             st.session_state.logged_in = False
@@ -328,5 +328,6 @@ else:
     else:
 
         signup_page()
+
 
 
