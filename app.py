@@ -264,7 +264,7 @@ def dashboard_page():
         st.link_button("ℹ️ Group Members", "https://docs.google.com/document/d/1YymXCoUaKSVT9I8O-4JrPcAAHTnsmNagHRoZV9Q7quM/edit?tab=t.0")
         st.link_button("📜 Group Rules", "https://docs.google.com/document/d/1UmwVVb2q8azpaN4nrN22489r9zBH_tJKzXJPZtivyxM/edit?tab=t.0")
         st.link_button("💰 Fund Status Coming Soon", "Coming Soon...")
-
+        st.link_button("ℹ️FAQ", "https://sites.google.com/view/runningstaffcarefund/faq?authuser=0")
         if st.button("🚪 Logout"):
             st.session_state.logged_in = False
             st.session_state.page = "login"
@@ -328,6 +328,7 @@ else:
     else:
 
         signup_page()
+
 
 
 
