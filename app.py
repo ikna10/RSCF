@@ -163,7 +163,7 @@ def app_footer():
         margin-top: 40px;
         box-shadow: 0px -2px 8px rgba(0,0,0,0.2);
     ">
-        "Design & Developed by RSCF © 2026 #BSR1419//BSR1402//BSR1400# | All Rights Reserved"
+        "Design & Developed by RSCF © 2026 #BSR1419//BSR1402 | All Rights Reserved"
     </div>
     """, unsafe_allow_html=True)
 
@@ -261,11 +261,11 @@ def dashboard_page():
 
     # ===== MOBILE SAFE MENU (ONLY HERE) =====
     with st.expander("☰ Menu", expanded=False):
-        st.link_button("📜 Group Rules", "https://docs.google.com/document/d/1UmwVVb2q8azpaN4nrN22489r9zBH_tJKzXJPZtivyxM/edit?tab=t.0")
-        st.link_button("ℹ️ Group Members", "https://docs.google.com/document/d/1YymXCoUaKSVT9I8O-4JrPcAAHTnsmNagHRoZV9Q7quM/edit?tab=t.0")
+       # st.link_button("📜 Group Rules", "https://docs.google.com/document/d/1UmwVVb2q8azpaN4nrN22489r9zBH_tJKzXJPZtivyxM/edit?tab=t.0")
+        #st.link_button("ℹ️ Group Members", "https://docs.google.com/document/d/1YymXCoUaKSVT9I8O-4JrPcAAHTnsmNagHRoZV9Q7quM/edit?tab=t.0")
        
-        st.link_button("💰 Fund Status ", "https://lookerstudio.google.com/u/0/reporting/94ba324a-1489-432b-8107-a3ace8fddcf1/page/ibGoF")
-        st.link_button("ℹ️FAQ", "https://sites.google.com/view/runningstaffcarefund/faq?authuser=0")
+        #st.link_button("💰 Fund Status ", "https://lookerstudio.google.com/u/0/reporting/94ba324a-1489-432b-8107-a3ace8fddcf1/page/ibGoF")
+        #st.link_button("ℹ️FAQ", "https://sites.google.com/view/runningstaffcarefund/faq?authuser=0")
         if st.button("🚪 Logout"):
             st.session_state.logged_in = False
             st.session_state.page = "login"
@@ -273,51 +273,79 @@ def dashboard_page():
 
     
     # ================= DASHBOARD BODY =================
+   # ================= HEADER ROW =================
+col1, col2 = st.columns([3, 1])
+
+with col1:
     st.markdown("## 📊 User Dashboard")
-    st.link_button("💰 Fund Status ", "https://lookerstudio.google.com/u/0/reporting/94ba324a-1489-432b-8107-a3ace8fddcf1/page/ibGoF")
+
+with col2:
+    st.link_button("💰 Fund Status", 
+                   "https://lookerstudio.google.com/u/0/reporting/94ba324a-1489-432b-8107-a3ace8fddcf1/page/ibGoF")
+
+st.markdown("---")
 
 
-    # ================= BRIEF HISTORY =================
+# ================= BRIEF HISTORY (CENTER) =================
+st.markdown(
+    """
+    <div style='text-align: center; max-width: 800px; margin: auto;'>
     
+    <h4>📖 Brief History</h4>
 
-    st.markdown("""
-    यह **“रनिंग स्टाफ सहायता ग्रुप”** पूर्णतः **गैर-लाभकारी (Non-Profit)** एवं **आपसी सहयोग** के आधार पर  
-    **Jan 2026** में गठित किया गया है, जिसका उद्देश्य रनिंग स्टाफ के सदस्यों को  
-    **असामान्य, आपातकालीन, आर्थिक एवं कठिन परिस्थितियों** में सहायता प्रदान करना है।
-    """)
+    <p>
+    यह <b>“रनिंग स्टाफ सहायता ग्रुप”</b> पूर्णतः 
+    <b>गैर-लाभकारी (Non-Profit)</b> एवं <b>आपसी सहयोग</b> के आधार पर 
+    <b>Jan 2026</b> में गठित किया गया है।
+    </p>
 
-    st.markdown("""
-    The **“Running Staff Care Fund”** is a completely **non-profit group** formed in **Jan 2026**  
-    on the basis of **mutual cooperation**.
+    <p>
+    इसका उद्देश्य रनिंग स्टाफ के सदस्यों को 
+    <b>असामान्य, आपातकालीन, आर्थिक एवं कठिन परिस्थितियों</b> में सहायता प्रदान करना है।
+    </p>
 
-    The objective of this group is to provide **financial and necessary assistance**  
-    to running staff members during **abnormal, emergency, financial, and difficult situations**,  
-    subject to the **rules of the group**.
-    """)
+    <p>
+    The <b>“Running Staff Care Fund”</b> is a completely 
+    <b>non-profit group</b> formed in <b>Jan 2026</b> 
+    on the basis of mutual cooperation.
+    </p>
 
-    contribution = get_contribution_by_cms(user["cmsid"])
+    <p>
+    Its objective is to provide financial and necessary assistance 
+    during abnormal, emergency, financial and difficult situations, 
+    subject to group rules.
+    </p>
 
-    col1, col2, col3 = st.columns(3)
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-    with col1:
-        st.metric("💰 Your Contribution", f"₹ {contribution}")
+st.markdown("---")
 
-    with col2:
-        st.metric("🆔 CMS ID", user["cmsid"])
 
-    with col3:
-        st.metric("✅ Status", user["status"])
+# ================= USER METRICS =================
+contribution = get_contribution_by_cms(user["cmsid"])
 
-    st.markdown("---")
+col1, col2, col3 = st.columns(3)
 
-    st.write("👤 **Name:**", user["name"])
-    st.write("🏢 **HQ:**", user["hq"])
-    st.write("📧 **Email:**", user["email"])
-    st.write("📱 **Mobile:**", user["mobile"])
-    
-    
-    
-    app_footer()
+with col1:
+    st.metric("💰 Your Contribution", f"₹ {contribution}")
+
+with col2:
+    st.metric("🆔 CMS ID", user["cmsid"])
+
+with col3:
+    st.metric("✅ Status", user["status"])
+
+st.markdown("---")
+
+st.write("👤 **Name:**", user["name"])
+st.write("🏢 **HQ:**", user["hq"])
+st.write("📧 **Email:**", user["email"])
+st.write("📱 **Mobile:**", user["mobile"])
+
+app_footer()
 
 
 
@@ -330,6 +358,7 @@ else:
     else:
 
         signup_page()
+
 
 
 
