@@ -274,10 +274,11 @@ def dashboard_page():
     
     # ================= DASHBOARD BODY =================
     st.markdown("## 📊 User Dashboard")
+    st.link_button("💰 Fund Status ", "https://lookerstudio.google.com/u/0/reporting/94ba324a-1489-432b-8107-a3ace8fddcf1/page/ibGoF")
 
 
     # ================= BRIEF HISTORY =================
-    st.markdown("### 📝 A Brief History")
+    
 
     st.markdown("""
     यह **“रनिंग स्टाफ सहायता ग्रुप”** पूर्णतः **गैर-लाभकारी (Non-Profit)** एवं **आपसी सहयोग** के आधार पर  
@@ -329,6 +330,7 @@ else:
     else:
 
         signup_page()
+
 
 
 
