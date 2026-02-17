@@ -270,12 +270,25 @@ def dashboard_page():
     st.markdown("---")
 
     # Brief History
+    st.markdown("<h4 style='text-align: center;'>📖 Brief History</h4>", unsafe_allow_html=True)
     st.markdown("""
-    यह **“रनिंग स्टाफ सहायता ग्रुप”** पूर्णतः **गैर-लाभकारी (Non-Profit)** 
-    एवं **आपसी सहयोग** के आधार पर **Jan 2026** में गठित किया गया है।
-    """)
+यह **“रनिंग स्टाफ सहायता ग्रुप”** पूर्णतः **गैर-लाभकारी (Non-Profit)** 
+एवं **आपसी सहयोग** के आधार पर **Jan 2026** में गठित किया गया है, 
+जिसका उद्देश्य रनिंग स्टाफ के सदस्यों को 
+**असामान्य, आपातकालीन, आर्थिक एवं कठिन परिस्थितियों** में सहायता प्रदान करना है।
+""")
 
-    st.markdown("---")
+st.markdown("""
+The **“Running Staff Care Fund”** is a completely **non-profit group** 
+formed in **Jan 2026** on the basis of **mutual cooperation**.
+
+The objective of this group is to provide **financial and necessary assistance** 
+to running staff members during **abnormal, emergency, financial, and difficult situations**, 
+subject to the **rules of the group**.
+""")
+
+st.markdown("---")
+
 
     # Metrics
     contribution = get_contribution_by_cms(user["cmsid"])
@@ -312,6 +325,7 @@ else:
     else:
 
         signup_page()
+
 
 
 
