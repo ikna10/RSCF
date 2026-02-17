@@ -273,48 +273,43 @@ def dashboard_page():
 
     
     # ================= DASHBOARD BODY =================
-   # ================= HEADER ROW =================
+  # ================= HEADER ROW =================
 col1, col2 = st.columns([3, 1])
 
 with col1:
     st.markdown("## 📊 User Dashboard")
 
 with col2:
-    st.link_button("💰 Fund Status", 
-                   "https://lookerstudio.google.com/u/0/reporting/94ba324a-1489-432b-8107-a3ace8fddcf1/page/ibGoF")
+    st.link_button(
+        "💰 Fund Status",
+        "https://lookerstudio.google.com/u/0/reporting/94ba324a-1489-432b-8107-a3ace8fddcf1/page/ibGoF"
+    )
 
 st.markdown("---")
 
 
-# ================= BRIEF HISTORY (CENTER) =================
+# ================= BRIEF HISTORY CENTER =================
+st.markdown("<h4 style='text-align: center;'>📖 Brief History</h4>", unsafe_allow_html=True)
+
 st.markdown(
     """
-    <div style='text-align: center; max-width: 800px; margin: auto;'>
-    
-    <h4>📖 Brief History</h4>
+    <div style='text-align:center; max-width:800px; margin:auto;'>
 
-    <p>
     यह <b>“रनिंग स्टाफ सहायता ग्रुप”</b> पूर्णतः 
     <b>गैर-लाभकारी (Non-Profit)</b> एवं <b>आपसी सहयोग</b> के आधार पर 
-    <b>Jan 2026</b> में गठित किया गया है।
-    </p>
+    <b>Jan 2026</b> में गठित किया गया है।  
 
-    <p>
     इसका उद्देश्य रनिंग स्टाफ के सदस्यों को 
     <b>असामान्य, आपातकालीन, आर्थिक एवं कठिन परिस्थितियों</b> में सहायता प्रदान करना है।
-    </p>
 
-    <p>
+    <br><br>
+
     The <b>“Running Staff Care Fund”</b> is a completely 
     <b>non-profit group</b> formed in <b>Jan 2026</b> 
     on the basis of mutual cooperation.
-    </p>
 
-    <p>
     Its objective is to provide financial and necessary assistance 
-    during abnormal, emergency, financial and difficult situations, 
-    subject to group rules.
-    </p>
+    during abnormal, emergency, financial and difficult situations.
 
     </div>
     """,
@@ -346,8 +341,6 @@ st.write("📧 **Email:**", user["email"])
 st.write("📱 **Mobile:**", user["mobile"])
 
 app_footer()
-
-
 
 # ---------------- Router ----------------
 if st.session_state.logged_in:
