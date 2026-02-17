@@ -275,8 +275,8 @@ def dashboard_page():
         st.markdown("## 🧑‍✈️ My Details")
     with col2:
         st.link_button(
-            "💰 Fund Status",
-            "https://lookerstudio.google.com/u/0/reporting/94ba324a-1489-432b-8107-a3ace8fddcf1/page/ibGoF"
+            "💰 CLICK FOR MORE DETAILS 💰",
+            "https://sites.google.com/view/runningstaffcarefund/home"
         )
 
     st.markdown("---")
@@ -337,6 +337,7 @@ else:
     else:
 
         signup_page()
+
 
 
 
