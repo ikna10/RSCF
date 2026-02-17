@@ -5,15 +5,18 @@ import pandas as pd
 import uuid
 import re
 
-# ---------------- PAGE CONFIG (ALWAYS FIRST) ----------------
-st.set_page_config(page_title="Running Staff Care Fund", layout="wide")
 
-# ---------------- CUSTOM CSS ----------------
+
+
+#page layout #
+
+
 st.markdown("""
 <style>
 body {
     background-color: #f5f7fb;
 }
+
 
 .main-title {
     font-size: 28px;
@@ -27,7 +30,6 @@ body {
     letter-spacing: 1px;
     box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
 }
-
 .page-title {
     font-size: 32px;
     font-weight: 700;
@@ -42,10 +44,19 @@ body {
     box-shadow: 0px 4px 10px rgba(0,0,0,0.25);
 }
 
+}
+
 .sub-title {
     font-size: 20px;
     color: #555;
     margin-bottom: 20px;
+}
+
+.login-box {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
 }
 
 .stButton > button {
@@ -61,6 +72,11 @@ body {
     background-color: #005f85;
 }
 
+.sidebar .sidebar-content {
+    background-color: #1f3c88;
+    color: white;
+}
+
 .footer {
     text-align: center;
     color: gray;
@@ -69,18 +85,31 @@ body {
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="page-title"> 🚆Running Staff Care Fund🚆</div>', unsafe_allow_html=True)
 
-# ---------------- GOOGLE SHEET CONNECTION ----------------
+
+#-----data from--------#
+
+
+
 SHEET_NAME = "USER_DATA"
+
+from google.oauth2.service_account import Credentials
+import streamlit as st
+import gspread
 
 def connect_sheet():
     scope = [
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive"
     ]
+
     creds_dict = st.secrets["gcp_service_account"]
-    creds = Credentials.from_service_account_info(creds_dict, scopes=scope)
+
+    creds = Credentials.from_service_account_info(
+        creds_dict,
+        scopes=scope
+    )
+
     client = gspread.authorize(creds)
     return client.open(SHEET_NAME).sheet1
 
@@ -92,25 +121,35 @@ def add_user(data):
     sheet = connect_sheet()
     sheet.append_row(data)
 
-@st.cache_data(ttl=300)
-def get_contribution_by_cms(cmsid):
-    df = load_data()
-    df["cmsid"] = df["cmsid"].astype(str)
-    row = df[df["cmsid"] == str(cmsid)]
-    if row.empty:
-        return 0
-    return row.iloc[0].get("contribution", 0)
-
-# ---------------- SESSION ----------------
+# ---------------- Session ----------------
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 
 if "page" not in st.session_state:
     st.session_state.page = "login"
 
+st.set_page_config(page_title="Running Staff Care Fund", layout="wide")
+
+st.markdown('<div class="page-title"> 🚆Running Staff Care Fund🚆</div>', unsafe_allow_html=True)
+
+
 df = load_data()
 
-# ---------------- FOOTER ----------------
+@st.cache_data(ttl=300)
+def get_contribution_by_cms(cmsid):
+    df = load_data()
+
+    # safety: string match
+    df["cmsid"] = df["cmsid"].astype(str)
+
+    row = df[df["cmsid"] == str(cmsid)]
+
+    if row.empty:
+        return 0
+
+    return row.iloc[0].get("contribution", 0)
+
+# ---------------- Signup ----------------
 def app_footer():
     st.markdown("""
     <div style="
@@ -121,33 +160,102 @@ def app_footer():
         font-size: 14px;
         font-weight: 500;
         border-radius: 6px;
-        margin-top: 40px;">
-        Design & Developed by RSCF © 2026 | All Rights Reserved
+        margin-top: 40px;
+        box-shadow: 0px -2px 8px rgba(0,0,0,0.2);
+    ">
+        "Design & Developed by RSCF © 2026 #BSR1419//BSR1402 | All Rights Reserved"
     </div>
     """, unsafe_allow_html=True)
 
-# ---------------- LOGIN ----------------
+
+
+def signup_page():
+    col1, col2 = st.columns([1.2, 1])
+
+    with col1:
+        st.image("handshake.png", width=420)
+
+    with col2:
+        
+        st.markdown("### 📝 Create Account")
+
+        name = st.text_input("Name *").strip()
+        hq = st.text_input("Headquarter *").strip()
+        cmsid = st.text_input("CMSID *").strip()
+        email = st.text_input("Email *").strip()
+        password = st.text_input("Password *", type="password").strip()
+        mobile = st.text_input("Mobile (10 digits) *").strip()
+
+        if st.button("Register"):
+
+            if not all([name, hq, cmsid, email, password, mobile]):
+                st.error("❌ All fields required")
+                return
+
+            if not re.fullmatch(r"\d{10}", mobile):
+                st.error("❌ Mobile must be 10 digits")
+                return
+
+            if email in df["email"].values:
+                st.error("❌ Email already registered")
+                return
+
+            user_id = str(uuid.uuid4())[:8]
+
+            add_user([user_id, name, hq, cmsid, email, password, mobile, "PENDING"])
+
+            st.success("✅ Registered. Wait for admin approval.")
+            st.session_state.page = "login"
+            st.rerun()
+
+        if st.button("Back to Login"):
+            st.session_state.page = "login"
+            st.rerun()
+
+        st.markdown('</div>', unsafe_allow_html=True)
+
+
+# ---------------- Login ----------------
 def login_page():
-    st.markdown("### 🔐 Login")
+    col1, col2 = st.columns([1.2, 1])
 
-    email = st.text_input("Email")
-    password = st.text_input("Password", type="password")
+    with col1:
+        st.image("handshake.png", width=420)
 
-    if st.button("Login"):
-        user = df[(df["email"] == email) & (df["password"] == password)]
+    with col2:
+        
 
-        if user.empty:
-            st.error("❌ Invalid credentials")
-        else:
-            user_data = user.iloc[0]
-            if user_data["status"] != "ACTIVE":
-                st.warning("⏳ Account not activated by admin")
+        st.markdown('<div class="main-title">🔐only signed up group members can login 🔐</div>', unsafe_allow_html=True)
+        
+
+        email = st.text_input("Email")
+        password = st.text_input("Password", type="password")
+
+        if st.button("Login"):
+            user = df[(df["email"] == email) & (df["password"] == password)]
+
+            if user.empty:
+                st.error("❌ Invalid credentials")
             else:
-                st.session_state.logged_in = True
-                st.session_state.user_data = user_data.to_dict()
-                st.rerun()
+                user_data = user.iloc[0]
+                if user_data["status"] != "ACTIVE":
+                    st.warning("⏳ Account not activated by admin")
+                else:
+                    st.session_state.logged_in = True
+                    st.session_state.user_data = user_data.to_dict()
+                    st.success("Login successful ✅")
+                    st.rerun()
 
-# ---------------- DASHBOARD ----------------
+        st.markdown("----")
+        if st.button("Create new account"):
+            st.session_state.page = "signup"
+            st.rerun()
+
+        st.markdown('</div>', unsafe_allow_html=True)
+        app_footer()
+
+
+# ---------------- Dashboard ----------------
 def dashboard_page():
     user = st.session_state.user_data
 
@@ -194,8 +302,29 @@ def dashboard_page():
 
     app_footer()
 
-# ---------------- ROUTER ----------------
+
+# ---------------- Router ----------------
 if st.session_state.logged_in:
     dashboard_page()
 else:
-    login_page()
+    if st.session_state.page == "login":
+        login_page()
+    else:
+
+        signup_page()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
