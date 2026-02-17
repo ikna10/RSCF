@@ -272,7 +272,7 @@ def dashboard_page():
     # Header Row
     col1, col2 = st.columns([3, 1])
     with col1:
-        st.markdown("## 📊 User Dashboard")
+        st.markdown("## 🧑‍✈️ My Details")
     with col2:
         st.link_button(
             "💰 Fund Status",
@@ -307,7 +307,7 @@ def dashboard_page():
 
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.metric("💰 Your Contribution", f"₹ {contribution}")
+        st.metric("💰 My Contribution", f"₹ {contribution}")
     with col2:
         st.metric("🆔 CMS ID", user["cmsid"])
     with col3:
@@ -337,6 +337,7 @@ else:
     else:
 
         signup_page()
+
 
 
 
