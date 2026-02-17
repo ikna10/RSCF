@@ -82,6 +82,16 @@ body {
     color: gray;
     margin-top: 40px;
 }
+{/* Hide Sidebar Navigation, Menu, Deploy Button, Footer */
+    [data-testid="stSidebarNav"],
+    [data-testid="stSidebarNavItems"],
+    [data-testid="stSidebarNavLink"],
+    [data-testid="stSidebarNavSeparator"],
+    [data-testid="stToolbar"],  /* Settings Menu (three dots) */
+    [data-testid="stDeployButton"],  /* Deploy button */
+    footer { 
+        display: none !important; 
+        visibility: hidden !important;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -327,6 +337,7 @@ else:
     else:
 
         signup_page()
+
 
 
 
