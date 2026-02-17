@@ -273,7 +273,7 @@ def dashboard_page():
 
     
     # ================= DASHBOARD BODY =================
-  # ================= HEADER ROW =================
+ # ================= HEADER (Dashboard + Button Side by Side) =================
 col1, col2 = st.columns([3, 1])
 
 with col1:
@@ -288,33 +288,22 @@ with col2:
 st.markdown("---")
 
 
-# ================= BRIEF HISTORY CENTER =================
-st.markdown("<h4 style='text-align: center;'>📖 Brief History</h4>", unsafe_allow_html=True)
+# ================= BRIEF HISTORY =================
+st.markdown("""
+यह **“रनिंग स्टाफ सहायता ग्रुप”** पूर्णतः **गैर-लाभकारी (Non-Profit)** 
+एवं **आपसी सहयोग** के आधार पर **Jan 2026** में गठित किया गया है, 
+जिसका उद्देश्य रनिंग स्टाफ के सदस्यों को 
+**असामान्य, आपातकालीन, आर्थिक एवं कठिन परिस्थितियों** में सहायता प्रदान करना है।
+""")
 
-st.markdown(
-    """
-    <div style='text-align:center; max-width:800px; margin:auto;'>
+st.markdown("""
+The **“Running Staff Care Fund”** is a completely **non-profit group** 
+formed in **Jan 2026** on the basis of **mutual cooperation**.
 
-    यह <b>“रनिंग स्टाफ सहायता ग्रुप”</b> पूर्णतः 
-    <b>गैर-लाभकारी (Non-Profit)</b> एवं <b>आपसी सहयोग</b> के आधार पर 
-    <b>Jan 2026</b> में गठित किया गया है।  
-
-    इसका उद्देश्य रनिंग स्टाफ के सदस्यों को 
-    <b>असामान्य, आपातकालीन, आर्थिक एवं कठिन परिस्थितियों</b> में सहायता प्रदान करना है।
-
-    <br><br>
-
-    The <b>“Running Staff Care Fund”</b> is a completely 
-    <b>non-profit group</b> formed in <b>Jan 2026</b> 
-    on the basis of mutual cooperation.
-
-    Its objective is to provide financial and necessary assistance 
-    during abnormal, emergency, financial and difficult situations.
-
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+The objective of this group is to provide **financial and necessary assistance** 
+to running staff members during **abnormal, emergency, financial, and difficult situations**, 
+subject to the **rules of the group**.
+""")
 
 st.markdown("---")
 
@@ -335,11 +324,15 @@ with col3:
 
 st.markdown("---")
 
+
+# ================= USER DETAILS =================
 st.write("👤 **Name:**", user["name"])
 st.write("🏢 **HQ:**", user["hq"])
 st.write("📧 **Email:**", user["email"])
 st.write("📱 **Mobile:**", user["mobile"])
 
+
+# ================= FOOTER =================
 app_footer()
 
 # ---------------- Router ----------------
@@ -351,6 +344,7 @@ else:
     else:
 
         signup_page()
+
 
 
 
