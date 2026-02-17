@@ -272,7 +272,7 @@ def dashboard_page():
     st.markdown("---")
 
     # Brief History
-    st.markdown("<h4 style='text-align: center;'>📖 Brief History</h4>", unsafe_allow_html=True)
+    
 
     st.markdown("""
     यह **“रनिंग स्टाफ सहायता ग्रुप”** पूर्णतः **गैर-लाभकारी (Non-Profit)** 
@@ -327,6 +327,7 @@ else:
     else:
 
         signup_page()
+
 
 
 
